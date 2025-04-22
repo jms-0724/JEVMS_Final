@@ -1,0 +1,68 @@
+body {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+}
+.bg-color {
+    background-color: #033047;
+}
+.activate {
+    background-color: #847cc9;
+}
+.table-wrapper {
+    display: block;
+    max-height: 350px; /* Adjust the height as needed */
+    overflow-y: auto;
+}
+.table-wrapper2 {
+    display: block;
+    max-height: 450px; /* Adjust the height as needed */
+    overflow-y: auto;
+}
+.table thead,
+.table tfoot {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 1;
+}
+
+.select {
+    width: 200px;        /* Set the width of the select box */
+    height: 150px;       /* Set the height of the select box */
+    overflow-y: auto;    /* Enable vertical scrolling */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center; /* Center the pagination */
+    flex-wrap: wrap; /* Allow items to wrap */
+}
+
+.page-item {
+    margin: 0 5px; /* Add spacing between pagination items */
+}
+
+.page-link {
+    padding: 10px 15px; /* Padding for the links */
+    border: 1px solid #007bff; /* Optional border for links */
+}
+
+.page-link:hover {
+    background-color: #007bff; /* Hover effect */
+    color: white; /* Change text color on hover */
+}
+
+@media (max-width: 576px) {
+    .pagination {
+        flex-direction: column; /* Stack items on smaller screens */
+    }
+
+    .page-item {
+        margin: 5px 0; /* Adjust margin for stacked items */
+    }
+}
+
+.highlight {
+    background-color: yellow;
+}

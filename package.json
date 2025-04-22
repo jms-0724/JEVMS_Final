@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "bootstrap-icons": "^1.11.3",
+    "chart.js": "^4.4.3",
+    "select2": "^4.1.0-rc.0"
+  }
+}

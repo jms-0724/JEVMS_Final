@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
        })
        document.getElementById('add_code').addEventListener('input', (event) => {
         let value = event.target.value;
-        event.target.value = value.replace(/[^0-9]/g, '');
+        event.target.value = value.replace(/[^A-Z0-9-]/g, '');
         });
        document.getElementById("proceedAdd").addEventListener("click", ()=> {
             let add_code = document.getElementById("add_code").value;

@@ -60,12 +60,12 @@
                         <span>General Ledger</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <!-- <li class="sidebar-item">
                     <a href="trialbalance.php" class="sidebar-link">
                         <i class="lni lni-book"></i>
                         <span>Trial Balance</span>
                     </a>
-                </li>
+                </li> -->
                 <li class="sidebar-item">
                     <a href="help.php" class="sidebar-link">
                         <i class="lni lni-book"></i>

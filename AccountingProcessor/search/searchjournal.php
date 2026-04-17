@@ -73,7 +73,11 @@ if ($result) {
                      </div>
                 <?php
             } else {
-
+                ?>
+                <div class ="mb-3">
+                        <button class="btn text-white" style="background-color:#004d68;" type="button" onclick="viewEntry2(<?= $row['journal_voucher_id']?>)"><span>Update Entry</span></button>
+                </div>
+                <?php
             }
            ?>
              

@@ -31,7 +31,7 @@ if (isset($jsondecoded['add_journal_number'])) {
         $add_journal_description = $jsondecoded['add_journal_description'];
         $add_journal_category = $jsondecoded['add_journal_category'];
         $fiscal_id = $_SESSION['fiscal_id'];
-        $journal_status = "Pending";
+        $journal_status = "Approved";
 
         $sql1 = $conn->prepare("INSERT INTO tbl_journal_entry (journal_voucher_no, journal_date, description, category_id, uid, fiscal_id, journal_status) VALUES (:journal_voucher_no, :journal_date, :description, :category_id, :uid, :fiscal_id, :journal_status)");
         $sql1->bindParam(':journal_voucher_no', $add_journal_number);
@@ -69,68 +69,68 @@ if (isset($jsondecoded['add_journal_number'])) {
                     $audit_description = "Added new journal items with $account_code";
                     logAuditTrail($conn, 'tbl_journal_items', $last_id3, 'INSERT', $audit_description, $_SESSION['userid']);
 
-                    // // Do nothing here, just continue to the next iteration
-                    // $dbt = "Debit";
-                    // $crt = "Credit";
+                    // Do nothing here, just continue to the next iteration
+                    $dbt = "Debit";
+                    $crt = "Credit";
 
-                    // // Insert for Debit
-                    // $sql3 = $conn->prepare("INSERT INTO tbl_general_ledger (ledger_date, account_code, debit, description, journal_voucher_id, fiscal_id) VALUES(:ledger_date, :account_code, :debit, :description, :journal_voucher_id, :fiscal_id2)");
-                    // $sql3->bindParam(":ledger_date", $add_journal_date2);
-                    // $sql3->bindParam(":account_code", $account_code);
-                    // $sql3->bindParam(":debit", $journal_amount);
-                    // $sql3->bindParam(":description", $add_journal_description);
-                    // $sql3->bindParam(":journal_voucher_id", $last_id);
-                    // $sql3->bindParam(":fiscal_id2", $fiscal_id);
+                    // Insert for Debit
+                    $sql3 = $conn->prepare("INSERT INTO tbl_general_ledger (ledger_date, account_code, debit, description, journal_voucher_id, fiscal_id) VALUES(:ledger_date, :account_code, :debit, :description, :journal_voucher_id, :fiscal_id2)");
+                    $sql3->bindParam(":ledger_date", $add_journal_date2);
+                    $sql3->bindParam(":account_code", $account_code);
+                    $sql3->bindParam(":debit", $journal_amount);
+                    $sql3->bindParam(":description", $add_journal_description);
+                    $sql3->bindParam(":journal_voucher_id", $last_id);
+                    $sql3->bindParam(":fiscal_id2", $fiscal_id);
 
                    
 
-                    // // Insert for Credit Legder
-                    // $sql4 = $conn->prepare("INSERT INTO tbl_general_ledger (ledger_date, account_code, credit, description, journal_voucher_id, fiscal_id) VALUES(:ledger_date, :account_code, :credit, :description, :journal_voucher_id, :fiscal_id3)");
-                    // $sql4->bindParam(":ledger_date", $add_journal_date2);
-                    // $sql4->bindParam(":account_code", $account_code);
-                    // $sql4->bindParam(":credit", $journal_amount);
-                    // $sql4->bindParam(":description", $add_journal_description);
-                    // $sql4->bindParam(":journal_voucher_id", $last_id);
-                    // $sql4->bindParam(":fiscal_id3", $fiscal_id);
+                    // Insert for Credit Legder
+                    $sql4 = $conn->prepare("INSERT INTO tbl_general_ledger (ledger_date, account_code, credit, description, journal_voucher_id, fiscal_id) VALUES(:ledger_date, :account_code, :credit, :description, :journal_voucher_id, :fiscal_id3)");
+                    $sql4->bindParam(":ledger_date", $add_journal_date2);
+                    $sql4->bindParam(":account_code", $account_code);
+                    $sql4->bindParam(":credit", $journal_amount);
+                    $sql4->bindParam(":description", $add_journal_description);
+                    $sql4->bindParam(":journal_voucher_id", $last_id);
+                    $sql4->bindParam(":fiscal_id3", $fiscal_id);
                                        
-                    // if ($journal_placement === $dbt) {
-                    //     $sql3->execute();
-                    //     $last_id2 = $conn->lastInsertId();
+                    if ($journal_placement === $dbt) {
+                        $sql3->execute();
+                        $last_id2 = $conn->lastInsertId();
 
-                    //     $audit_description = "Added new general ledger items with $account_code with journal voucher ID $last_id";
-                    //     logAuditTrail($conn, 'tbl_general_ledger', $last_id2, 'INSERT', $audit_description, $_SESSION['userid']);
-                    //     // Insert for Debit Balance
-                    // $sql5 = $conn->prepare("INSERT INTO tbl_trial_balance (ledger_id, account_code, total_debit, trial_balance_date, fiscal_id) VALUES(:ledger_id, :account_code, :total_debit, :trial_balance_date, :fiscal_id4)");
-                    // $sql5->bindParam(":ledger_id", $last_id2);
-                    // $sql5->bindParam(":account_code", $account_code);
-                    // $sql5->bindParam(":total_debit", $journal_amount);
-                    // $sql5->bindParam(":trial_balance_date", $add_journal_date2);
-                    // $sql5->bindParam(":fiscal_id4", $fiscal_id);
-                    // $sql5->execute();
-                    // $last_id4 = $conn->lastInsertId(); //Last Inserted ID
-                    // $audit_description = "Added new trial balance items with $account_code with journal voucher ID $last_id";
-                    // logAuditTrail($conn, 'tbl_trial_balance', $last_id4, 'INSERT', $audit_description, $_SESSION['userid']);
+                        $audit_description = "Added new general ledger items with $account_code with journal voucher ID $last_id";
+                        logAuditTrail($conn, 'tbl_general_ledger', $last_id2, 'INSERT', $audit_description, $_SESSION['userid']);
+                        // Insert for Debit Balance
+                    $sql5 = $conn->prepare("INSERT INTO tbl_trial_balance (ledger_id, account_code, total_debit, trial_balance_date, fiscal_id) VALUES(:ledger_id, :account_code, :total_debit, :trial_balance_date, :fiscal_id4)");
+                    $sql5->bindParam(":ledger_id", $last_id2);
+                    $sql5->bindParam(":account_code", $account_code);
+                    $sql5->bindParam(":total_debit", $journal_amount);
+                    $sql5->bindParam(":trial_balance_date", $add_journal_date2);
+                    $sql5->bindParam(":fiscal_id4", $fiscal_id);
+                    $sql5->execute();
+                    $last_id4 = $conn->lastInsertId(); //Last Inserted ID
+                    $audit_description = "Added new trial balance items with $account_code with journal voucher ID $last_id";
+                    logAuditTrail($conn, 'tbl_trial_balance', $last_id4, 'INSERT', $audit_description, $_SESSION['userid']);
 
-                    // } elseif ($journal_placement  === $crt){
-                    //     $sql4->execute();
-                    //     $last_id2 = $conn->lastInsertId();
+                    } else if ($journal_placement  === $crt){
+                        $sql4->execute();
+                        $last_id2 = $conn->lastInsertId();
 
-                    //     $audit_description = "Added new general ledger items with $account_code with journal voucher ID $last_id";
-                    //     logAuditTrail($conn, 'tbl_general_ledger', $last_id2, 'INSERT', $audit_description, $_SESSION['userid']);
-                    //      // Insert for credit balance
-                    // $sql6 = $conn->prepare("INSERT INTO tbl_trial_balance (ledger_id, account_code, total_credit, trial_balance_date, fiscal_id) VALUES(:ledger_id, :account_code, :total_credit, :trial_balance_date, :fiscal_id5)");
-                    // $sql6->bindParam(":ledger_id", $last_id2);
-                    // $sql6->bindParam(":account_code", $account_code);
-                    // $sql6->bindParam(":total_credit", $journal_amount);
-                    // $sql6->bindParam(":trial_balance_date", $add_journal_date2);
-                    // $sql6->bindParam(":fiscal_id5", $fiscal_id);
-                    // $sql6->execute();
+                        $audit_description = "Added new general ledger items with $account_code with journal voucher ID $last_id";
+                        logAuditTrail($conn, 'tbl_general_ledger', $last_id2, 'INSERT', $audit_description, $_SESSION['userid']);
+                         // Insert for credit balance
+                    $sql6 = $conn->prepare("INSERT INTO tbl_trial_balance (ledger_id, account_code, total_credit, trial_balance_date, fiscal_id) VALUES(:ledger_id, :account_code, :total_credit, :trial_balance_date, :fiscal_id5)");
+                    $sql6->bindParam(":ledger_id", $last_id2);
+                    $sql6->bindParam(":account_code", $account_code);
+                    $sql6->bindParam(":total_credit", $journal_amount);
+                    $sql6->bindParam(":trial_balance_date", $add_journal_date2);
+                    $sql6->bindParam(":fiscal_id5", $fiscal_id);
+                    $sql6->execute();
                         
-                    // $last_id4 = $conn->lastInsertId(); //TRIAL BALANCE LAST INSERT ID
-                    // $audit_description = "Added new trial balance items with $account_code with journal voucher ID $last_id";
-                    // logAuditTrail($conn, 'tbl_trial_balance', $last_id4, 'INSERT', $audit_description, $_SESSION['userid']);
+                    $last_id4 = $conn->lastInsertId(); //TRIAL BALANCE LAST INSERT ID
+                    $audit_description = "Added new trial balance items with $account_code with journal voucher ID $last_id";
+                    logAuditTrail($conn, 'tbl_trial_balance', $last_id4, 'INSERT', $audit_description, $_SESSION['userid']);
                         
-                    // }
+                    }
 
                 } else {
                     // If any of the second query executions fail, roll back the transaction

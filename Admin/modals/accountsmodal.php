@@ -11,7 +11,7 @@
             <form method="post" id="addAccountForm">
                 <div class="form-group mb-2">
                     <label for="add_username" class="form-label">Account Code</label>
-                    <input type="text" name="add_code" id="add_code" class="form-control" minlength="8" maxlength="8" required>
+                    <input type="text" name="add_code" id="add_code" class="form-control" minlength="8" maxlength="10" required>
                 </div>
                 <div class="form-group mb-2">
                     <label for="account_title" class="form-label">Account Title</label>
